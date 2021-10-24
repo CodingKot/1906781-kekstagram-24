@@ -1,18 +1,17 @@
-const getNumbersForCommentsId = () => {
-  const numbersForCommentsId = [];
-  for (let counter = 1; counter <= 1000; counter++) {
-    numbersForCommentsId.push(counter);
+const getNumbersForId = (lastItem) => {
+  const numbersForId = [];
+  for (let counter = 1; counter <= lastItem; counter++) {
+    numbersForId.push(counter);
   }
-
-  return numbersForCommentsId;
+  return numbersForId;
 };
 
-const getAnyRandomNumber = function(min, max) {
+const getRandomNumber = function(min, max) {
   return (min < 0 || min >= max) ? 'Диапазон задан некорректно' : Math.floor(min + Math.random() * (max + 1 - min));
 };
 
-const getUniqueRandomNumber = function(data) {
-  return data.splice(getAnyRandomNumber(0, data.length - 1), 1)[0];
+const getUniqueRandomNumber = function(arr) {
+  return arr.splice(getRandomNumber(0, arr.length - 1), 1)[0];
 };
 
-export {getNumbersForCommentsId, getAnyRandomNumber, getUniqueRandomNumber};
+export {getNumbersForId, getRandomNumber, getUniqueRandomNumber};

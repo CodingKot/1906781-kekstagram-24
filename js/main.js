@@ -16,4 +16,3 @@ for (let i = 0; i <= DESCRIPTIONS_NUMBER; i++) {
   const parent = document.querySelector('body');
   parent.append(testData);
 }
-

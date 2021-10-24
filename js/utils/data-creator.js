@@ -1,4 +1,4 @@
-import {getNumbersForCommentsId, getAnyRandomNumber, getUniqueRandomNumber} from './functions.js';
+import {getNumbersForId, getRandomNumber, getUniqueRandomNumber} from './functions.js';
 
 const DESCRIPTIONS_NUMBER = 25;
 const LIKES_MIN = 15;
@@ -16,7 +16,7 @@ const DESCRIPTIONS_TEXT = [
   'Кошачьи радости',
   'Ночной тыгыдык',
   'Отдай мне свою еду',
-  'Пушистые лапки',
+  'Мягкие лапки',
   'Самый голодный в мире кот',
   'Хочу есть!',
   'Поиграй со мной',
@@ -58,33 +58,31 @@ const COMMENTATOR_NAMES = [
   'Барсик',
 ];
 
-const descriptionId = [];
-for (let counter = 1; counter <= DESCRIPTIONS_NUMBER; counter++) {
-  descriptionId.push(counter);
-}
+const commentsId = getNumbersForId (1000);
+const descriptionsId = getNumbersForId (DESCRIPTIONS_NUMBER);
 
 const createComment = function () {
   return {
-    id: getUniqueRandomNumber(getNumbersForCommentsId()),
-    avatar: `img/avatar-${getAnyRandomNumber(AVATAR_START_NUM, AVATAR_STOP_NUM)}.svg`,
-    message: PHRASES_FOR_COMMENTS[getAnyRandomNumber(0, PHRASES_FOR_COMMENTS.length - 1)],
-    name: COMMENTATOR_NAMES[getAnyRandomNumber(0, COMMENTATOR_NAMES.length - 1)],
+    id: getUniqueRandomNumber(commentsId),
+    avatar: `img/avatar-${getRandomNumber(AVATAR_START_NUM, AVATAR_STOP_NUM)}.svg`,
+    message: PHRASES_FOR_COMMENTS[getRandomNumber(0, PHRASES_FOR_COMMENTS.length - 1)],
+    name: COMMENTATOR_NAMES[getRandomNumber(0, COMMENTATOR_NAMES.length - 1)],
   };
 };
 
 const getCommentsArray = function () {
   return Array.from({
-    length: getAnyRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
+    length: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
   }, createComment);
 };
 
 const createPictureDescription = function() {
-  const idNumber = getUniqueRandomNumber(descriptionId);
+  const idNumber = getUniqueRandomNumber(descriptionsId);
   return {
     id: idNumber,
     url: `photos/${idNumber}.jpg`,
     description: getUniqueRandomNumber(DESCRIPTIONS_TEXT),
-    likes: getAnyRandomNumber(LIKES_MIN, LIKES_MAX),
+    likes: getRandomNumber(LIKES_MIN, LIKES_MAX),
     comments: getCommentsArray(),
   };
 };
