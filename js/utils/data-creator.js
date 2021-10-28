@@ -87,4 +87,8 @@ const createPictureDescription = function() {
   };
 };
 
-export {DESCRIPTIONS_NUMBER, createPictureDescription};
+const createPictureDescriptions = () => Array.from({
+  length: DESCRIPTIONS_NUMBER,
+}, createPictureDescription);
+
+export {createPictureDescriptions};
