@@ -14,4 +14,7 @@ const getUniqueRandomNumber = function(arr) {
   return arr.splice(getRandomNumber(0, arr.length - 1), 1)[0];
 };
 
-export {getNumbersForId, getRandomNumber, getUniqueRandomNumber};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export {getNumbersForId, getRandomNumber, getUniqueRandomNumber, isEscapeKey};

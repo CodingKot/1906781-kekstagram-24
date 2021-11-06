@@ -1,2 +1,4 @@
-import './utils/data-creator.js';
-import './utils/draw-pictures.js';
+import {closeElement, showBigPicture, closeBigPicture} from './utils/big-picture.js';
+showBigPicture();
+closeElement.addEventListener('click', closeBigPicture);
+
