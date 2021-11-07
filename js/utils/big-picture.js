@@ -1,10 +1,12 @@
-import {container, randomPictures, renderPictures} from './draw-pictures.js';
+import {picturesContainerNode, randomPictures, renderPictures} from './draw-pictures.js';
 import {isEscapeKey} from './functions.js';
-container.appendChild(renderPictures());
-const pictures = container.querySelectorAll('.picture');
+
+picturesContainerNode.appendChild(renderPictures());
+const pictures = picturesContainerNode.querySelectorAll('.picture');
 const bigPictureSection = document.querySelector('.big-picture');
 const closeElement = bigPictureSection.querySelector('.big-picture__cancel');
 const socialComments = document.querySelector('.social__comments');
+
 function openBigPicture (randomPicture) {
   bigPictureSection.classList.remove('hidden');
   bigPictureSection.querySelector('.big-picture__img').querySelector('img').src = randomPicture.url;

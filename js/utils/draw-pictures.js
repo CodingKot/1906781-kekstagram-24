@@ -1,5 +1,5 @@
 import {createPictureDescriptions} from './data-creator.js';
-const container = document.querySelector('.pictures');
+const picturesContainerNode = document.querySelector('.pictures');
 const randomPictures = createPictureDescriptions();
 const renderPictures = () => {
   const fragment = document.createDocumentFragment();
@@ -14,4 +14,4 @@ const renderPictures = () => {
   return fragment;
 };
 
-export {container, randomPictures, renderPictures};
+export {picturesContainerNode, randomPictures, renderPictures};
