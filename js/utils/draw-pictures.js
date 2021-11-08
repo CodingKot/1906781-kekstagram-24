@@ -1,9 +1,9 @@
 import {createPictureDescriptions} from './data-creator.js';
-const container = document.querySelector('.pictures');
+const picturesContainerNode = document.querySelector('.pictures');
+const randomPictures = createPictureDescriptions();
 const renderPictures = () => {
   const fragment = document.createDocumentFragment();
   const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
-  const randomPictures = createPictureDescriptions();
   randomPictures.forEach(({url, likes, comments}) => {
     const randomPicture = templateFragment.cloneNode(true);
     randomPicture.querySelector('.picture__img').src = url;
@@ -13,6 +13,5 @@ const renderPictures = () => {
   });
   return fragment;
 };
-container.appendChild(renderPictures());
 
-
+export {picturesContainerNode, randomPictures, renderPictures};
