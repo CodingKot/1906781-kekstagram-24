@@ -6,7 +6,7 @@ const LIKES_MAX = 200;
 const AVATAR_START_NUM = 1;
 const AVATAR_STOP_NUM = 6;
 const COMMENTS_MIN = 1;
-const COMMENTS_MAX = 3;
+const COMMENTS_MAX = 13;
 const DESCRIPTIONS_TEXT = [
   'Утро кота',
   'Рыбов красивое',
