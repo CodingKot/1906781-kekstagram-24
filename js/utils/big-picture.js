@@ -25,20 +25,19 @@ function openBigPicture (randomPicture) {
   }
 }
 
-function closeBigPicture () {
-  bigPictureSection.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
-  // eslint-disable-next-line no-use-before-define
-  document.removeEventListener('keydown', onPopUpEscKeyDown);
-
-}
-
 const onPopUpEscKeyDown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }
 };
+
+function closeBigPicture () {
+  bigPictureSection.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', onPopUpEscKeyDown);
+
+}
 
 const showBigPicture = () => {
   for (let i = 0; i < pictures.length; i++) {
