@@ -20,7 +20,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, formData) => {
   fetch(
-    'https://24.javascript.pages.academy/kekstagra',
+    'https://24.javascript.pages.academy/kekstagram',
     {
       method:'POST',
       body: formData,

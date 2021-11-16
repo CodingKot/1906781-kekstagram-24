@@ -1,7 +1,7 @@
 import {isEscapeKey} from './functions.js';
 
 const bigPictureSection = document.querySelector('.big-picture');
-const closeElement = bigPictureSection.querySelector('.big-picture__cancel');
+
 const socialComments = document.querySelector('.social__comments');
 const commentsShown = document.querySelector('.comments-shown');
 const commentsLoadButton = bigPictureSection.querySelector('.social__comments-loader');
@@ -77,5 +77,5 @@ function closeBigPicture () {
   count = 10;
 }
 
-export {closeElement, openBigPicture, closeBigPicture, onPopUpEscKeyDown};
+export {openBigPicture, closeBigPicture, onPopUpEscKeyDown};
 

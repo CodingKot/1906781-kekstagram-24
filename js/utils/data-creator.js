@@ -1,10 +1,8 @@
-import {openBigPicture, closeElement, closeBigPicture, onPopUpEscKeyDown} from './big-picture.js';
+import {openBigPicture, closeBigPicture, onPopUpEscKeyDown} from './big-picture.js';
 
+const closeElement = document.querySelector('.big-picture__cancel');
 const container = document.querySelector('.pictures');
 const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
-const filterDiscussed = document.querySelector('#filter-discussed');
-const filterRandom = document.querySelector('#filter-random');
-const filterDefault = document.querySelector('#filter-default');
 
 const renderPicturesList = (picturesData) => {
   document.querySelectorAll('.picture').forEach ((pictureNode) => {
@@ -30,4 +28,4 @@ const renderPicturesList = (picturesData) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
-export {renderPicturesList, filterDiscussed, filterRandom, filterDefault};
+export {renderPicturesList};

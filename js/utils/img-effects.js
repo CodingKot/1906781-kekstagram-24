@@ -1,34 +1,34 @@
 import {minimizeValue, maximizeValue} from './functions.js';
-import {formForPictureLoad} from './load-new-picture-form.js';
 
+const formForPictureLoad = document.querySelector('.img-upload__form');
 const scaleControlSmaller = formForPictureLoad.querySelector('.scale__control--smaller');
 const scaleControlBigger = formForPictureLoad.querySelector('.scale__control--bigger');
 const scaleControl = formForPictureLoad.querySelector('.scale__control--value');
 const imagePreview = formForPictureLoad.querySelector('.img-upload__preview');
 const sliderElement = formForPictureLoad.querySelector('.effect-level__slider');
 const effectLevel = formForPictureLoad.querySelector('.effect-level__value');
-const effects = formForPictureLoad.querySelectorAll('.effects__radio');
 
-formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
+const initImgEffects = () => {
+  formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
 
-scaleControlSmaller.addEventListener ('click', () =>{
-  minimizeValue (scaleControl, imagePreview);
-});
+  scaleControlSmaller.addEventListener ('click', () =>{
+    minimizeValue (scaleControl, imagePreview);
+  });
 
-scaleControlBigger.addEventListener ('click', () => {
-  maximizeValue (scaleControl, imagePreview);
-});
+  scaleControlBigger.addEventListener ('click', () => {
+    maximizeValue (scaleControl, imagePreview);
+  });
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step:1,
-  connect: 'lower',
-});
-
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 100,
+    step:1,
+    connect: 'lower',
+  });
+};
 
 let effectClassName = '';
 function onEffectChange (evt) {
@@ -126,10 +126,14 @@ function onEffectChange (evt) {
   }
 
   if (evt.target.value === 'none') {
-    imagePreview.removeAttribute('style');
+    imagePreview.style.filter = 'none';
     formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
   }
 }
+
+const initSliderChange = () => {
+  formForPictureLoad.addEventListener('change', onEffectChange);
+};
 
 const resetForm = () => {
   formForPictureLoad.reset();
@@ -141,4 +145,4 @@ const resetForm = () => {
   formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
 };
 
-export {scaleControl, effects, imagePreview, resetForm, formForPictureLoad, onEffectChange};
+export {resetForm, initImgEffects, initSliderChange};

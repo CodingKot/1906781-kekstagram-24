@@ -1,3 +1,5 @@
+import { stopEsc } from './load-new-picture-form.js';
+
 const hashtagsContainer = document.querySelector('.text__hashtags');
 const commentsContainer = document.querySelector('.text__description');
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
@@ -73,6 +75,8 @@ const checkCommentsArea = () => {
 const initValidation = () => {
   commentsContainer.addEventListener('input', checkCommentsArea);
   hashtagsContainer.addEventListener('blur', checkHashtagArea);
+  hashtagsContainer.addEventListener('keydown', stopEsc);
+  commentsContainer.addEventListener('keydown', stopEsc);
 };
 
-export {hashtagsContainer, commentsContainer, initValidation};
+export {initValidation};

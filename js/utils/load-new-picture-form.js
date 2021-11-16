@@ -34,6 +34,11 @@ const stopEsc = (evt) => {
   }
 };
 
+const initLoadForm = () => {
+  newFileLoad.addEventListener('change', openPictureLoadForm);
+  formCloseButton.addEventListener('click', closePictureLoadForm);
+};
+
 const setFormSubmit = () => {
   formForPictureLoad.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -48,4 +53,4 @@ const setFormSubmit = () => {
   });
 };
 
-export {newFileLoad, formCloseButton, openPictureLoadForm, setFormSubmit, closePictureLoadForm, stopEsc, formForPictureLoad};
+export {initLoadForm, setFormSubmit, stopEsc};
