@@ -1,3 +1,5 @@
+import { stopEsc } from './load-new-picture-form.js';
+
 const hashtagsContainer = document.querySelector('.text__hashtags');
 const commentsContainer = document.querySelector('.text__description');
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
@@ -36,8 +38,7 @@ const checkHashtagArea = () => {
   hashtagsArray.forEach((item) => {
     similarHashtags.push(item.toLowerCase());
   });
-
-  similarHashtags = similarHashtags.filter((item, i, arr) => i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
+  similarHashtags = similarHashtags.filter((item, i, arr) =>  i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
   if (hashtagsArray.length > 5 && incorrectHashtags.length > 0) {
     hashtagsContainer.setCustomValidity(`${incorrectHashtags} ${hashtagAllIsWrongMessage}`);
     incorrectHashtags = [];
@@ -74,6 +75,8 @@ const checkCommentsArea = () => {
 const initValidation = () => {
   commentsContainer.addEventListener('input', checkCommentsArea);
   hashtagsContainer.addEventListener('blur', checkHashtagArea);
+  hashtagsContainer.addEventListener('keydown', stopEsc);
+  commentsContainer.addEventListener('keydown', stopEsc);
 };
 
-export {hashtagsContainer, commentsContainer, initValidation};
+export {initValidation};

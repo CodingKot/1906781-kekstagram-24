@@ -1,12 +1,22 @@
-import {closeElement, showBigPicture, closeBigPicture} from './utils/big-picture.js';
-import {showForm, stopEsc} from './utils/load-form.js';
-import {hashtagsContainer, commentsContainer, initValidation} from './utils/form-validation.js';
+import {getData} from './utils/api.js';
+import {renderPicturesList} from './utils/data-creator.js';
+import {initPictureFilters} from './utils/filters.js';
+import {initImgEffects, initSliderChange} from './utils/img-effects.js';
+import {initValidation} from './utils/validation.js';
+import {initLoadForm, setFormSubmit} from './utils/load-new-picture-form.js';
 
-showBigPicture();
-closeElement.addEventListener('click', closeBigPicture);
-showForm();
-hashtagsContainer.addEventListener('keydown', stopEsc);
-commentsContainer.addEventListener('keydown', stopEsc);
+const RERENDER_DELAY = 500;
+document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+
+getData((picturesData) => {
+  renderPicturesList(picturesData);
+  initPictureFilters (picturesData, RERENDER_DELAY, renderPicturesList);
+});
+
+initLoadForm();
+initImgEffects();
+initSliderChange();
 initValidation();
+setFormSubmit ();
 
 
