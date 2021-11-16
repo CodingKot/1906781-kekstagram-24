@@ -1,20 +1,48 @@
-const getNumbersForId = (lastItem) => {
-  const numbersForId = [];
-  for (let counter = 1; counter <= lastItem; counter++) {
-    numbersForId.push(counter);
+const isEscapeKey = (evt) =>  evt.key === 'Escape';
+
+const getNumberWithoutPercent = function (obj) {
+  return +(obj.value.substring(0, obj.value.length - 1));
+};
+
+const minimizeValue = function (obj1, obj2) {
+  let changingValue = getNumberWithoutPercent(obj1);
+  if(changingValue > 25) {
+    obj1.value = `${changingValue-=25}%`;
+  } else {
+    obj1.value = '25%';
   }
-  return numbersForId;
+  obj2.style.transform = `scale(${changingValue/100})`;
 };
 
-const getRandomNumber = function(min, max) {
-  return (min < 0 || min >= max) ? 'Диапазон задан некорректно' : Math.floor(min + Math.random() * (max + 1 - min));
+const maximizeValue = function (obj1, obj2) {
+  let changingValue = getNumberWithoutPercent(obj1);
+  if(changingValue < 100) {
+    obj1.value = `${changingValue+=25}%`;
+
+  } else {
+    obj1.value = '100%';
+  }
+  obj2.style.transform = `scale(${changingValue/100})`;
 };
 
-const getUniqueRandomNumber = function(arr) {
-  return arr.splice(getRandomNumber(0, arr.length - 1), 1)[0];
+const showLoadAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-
-
-export {getNumbersForId, getRandomNumber, getUniqueRandomNumber, isEscapeKey};
+export {isEscapeKey, minimizeValue, maximizeValue, showLoadAlert};

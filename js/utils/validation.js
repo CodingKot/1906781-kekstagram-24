@@ -36,8 +36,7 @@ const checkHashtagArea = () => {
   hashtagsArray.forEach((item) => {
     similarHashtags.push(item.toLowerCase());
   });
-
-  similarHashtags = similarHashtags.filter((item, i, arr) => i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
+  similarHashtags = similarHashtags.filter((item, i, arr) =>  i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
   if (hashtagsArray.length > 5 && incorrectHashtags.length > 0) {
     hashtagsContainer.setCustomValidity(`${incorrectHashtags} ${hashtagAllIsWrongMessage}`);
     incorrectHashtags = [];
