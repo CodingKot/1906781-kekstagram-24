@@ -1,22 +1,23 @@
 import {minimizeValue, maximizeValue} from './functions.js';
 
-const formForPictureLoad = document.querySelector('.img-upload__form');
-const scaleControlSmaller = formForPictureLoad.querySelector('.scale__control--smaller');
-const scaleControlBigger = formForPictureLoad.querySelector('.scale__control--bigger');
-const scaleControl = formForPictureLoad.querySelector('.scale__control--value');
-const imagePreview = formForPictureLoad.querySelector('.img-upload__preview');
-const sliderElement = formForPictureLoad.querySelector('.effect-level__slider');
-const effectLevel = formForPictureLoad.querySelector('.effect-level__value');
+const formForPictureLoadElement = document.querySelector('.img-upload__form');
+const scaleControlSmallerElement = formForPictureLoadElement.querySelector('.scale__control--smaller');
+const scaleControlBiggerElement = formForPictureLoadElement.querySelector('.scale__control--bigger');
+const scaleControlElement = formForPictureLoadElement.querySelector('.scale__control--value');
+const previewElement = document.querySelector('.img-upload__preview').querySelector('img');
+const sliderElement = formForPictureLoadElement.querySelector('.effect-level__slider');
+const effectLevelElement = formForPictureLoadElement.querySelector('.effect-level__value');
+const areaForSliderElement = formForPictureLoadElement.querySelector('.img-upload__effect-level');
 
 const initImgEffects = () => {
-  formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
+  areaForSliderElement.classList.add('hidden');
 
-  scaleControlSmaller.addEventListener ('click', () =>{
-    minimizeValue (scaleControl, imagePreview);
+  scaleControlSmallerElement.addEventListener ('click', () =>{
+    minimizeValue (scaleControlElement, previewElement);
   });
 
-  scaleControlBigger.addEventListener ('click', () => {
-    maximizeValue (scaleControl, imagePreview);
+  scaleControlBiggerElement.addEventListener ('click', () => {
+    maximizeValue (scaleControlElement, previewElement);
   });
 
   noUiSlider.create(sliderElement, {
@@ -32,15 +33,17 @@ const initImgEffects = () => {
 
 let effectClassName = '';
 function onEffectChange (evt) {
+  if (evt.target.name !== 'effect') {
+    return false;
+  }
 
   if (effectClassName !== '') {
-    imagePreview.classList.remove(effectClassName);
+    previewElement.removeAttribute('class');
   }
-  effectClassName = `effects__preview--${evt.target.value}`;
-  imagePreview.classList.add(effectClassName);
 
   if(evt.target.value === 'chrome') {
-
+    effectClassName = 'effects__preview--chrome';
+    previewElement.classList.add(effectClassName);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -49,15 +52,16 @@ function onEffectChange (evt) {
       start: 1,
       step: 0.1,
     });
-    formForPictureLoad.querySelector('.img-upload__effect-level').classList.remove('hidden');
+    areaForSliderElement.classList.remove('hidden');
     sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
-      effectLevel.value = unencoded[handle];
-      imagePreview.style.filter = `grayscale(${effectLevel.value})`;
+      effectLevelElement.value = unencoded[handle];
+      previewElement.style.filter = `grayscale(${effectLevelElement.value})`;
     });
   }
 
   if(evt.target.value === 'sepia') {
-
+    effectClassName = 'effects__preview--sepia';
+    previewElement.classList.add(effectClassName);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -66,16 +70,17 @@ function onEffectChange (evt) {
       start: 1,
       step: 0.1,
     });
-    formForPictureLoad.querySelector('.img-upload__effect-level').classList.remove('hidden');
+    areaForSliderElement.classList.remove('hidden');
     sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
-      effectLevel.value = unencoded[handle];
-      imagePreview.style.filter = `sepia(${effectLevel.value})`;
+      effectLevelElement.value = unencoded[handle];
+      previewElement.style.filter = `sepia(${effectLevelElement.value})`;
     });
 
   }
 
   if(evt.target.value === 'marvin') {
-
+    effectClassName = 'effects__preview--marvin';
+    previewElement.classList.add(effectClassName);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -84,15 +89,16 @@ function onEffectChange (evt) {
       start: 100,
       step: 1,
     });
-    formForPictureLoad.querySelector('.img-upload__effect-level').classList.remove('hidden');
+    areaForSliderElement.classList.remove('hidden');
     sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
-      effectLevel.value = unencoded[handle];
-      imagePreview.style.filter = `invert(${effectLevel.value}%)`;
+      effectLevelElement.value = unencoded[handle];
+      previewElement.style.filter = `invert(${effectLevelElement.value}%)`;
     });
   }
 
   if(evt.target.value === 'phobos') {
-
+    effectClassName = 'effects__preview--phobos';
+    previewElement.classList.add(effectClassName);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -101,10 +107,10 @@ function onEffectChange (evt) {
       start: 3,
       step: 0.1,
     });
-    formForPictureLoad.querySelector('.img-upload__effect-level').classList.remove('hidden');
+    areaForSliderElement.classList.remove('hidden');
     sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
-      effectLevel.value = unencoded[handle];
-      imagePreview.style.filter = `blur(${effectLevel.value}px)`;
+      effectLevelElement.value = unencoded[handle];
+      previewElement.style.filter = `blur(${effectLevelElement.value}px)`;
     });
   }
 
@@ -118,31 +124,32 @@ function onEffectChange (evt) {
       start: 3,
       step: 0.1,
     });
-    formForPictureLoad.querySelector('.img-upload__effect-level').classList.remove('hidden');
+    effectClassName = 'effects__preview--heat';
+    previewElement.classList.add(effectClassName);
+    areaForSliderElement.classList.remove('hidden');
     sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
-      effectLevel.value = unencoded[handle];
-      imagePreview.style.filter = `brightness(${effectLevel.value})`;
+      effectLevelElement.value = unencoded[handle];
+      previewElement.style.filter = `brightness(${effectLevelElement.value})`;
     });
   }
 
   if (evt.target.value === 'none') {
-    imagePreview.style.filter = 'none';
-    formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
+    previewElement.style.filter = 'none';
+    areaForSliderElement.classList.add('hidden');
   }
 }
 
 const initSliderChange = () => {
-  formForPictureLoad.addEventListener('change', onEffectChange);
+  formForPictureLoadElement.addEventListener('change', onEffectChange);
 };
 
 const resetForm = () => {
-  formForPictureLoad.reset();
+  formForPictureLoadElement.reset();
   document.getElementById('effect-none').checked = true;
-  imagePreview.classList.remove(effectClassName);
-  imagePreview.classList.add('effects__preview--none');
-  imagePreview.style.filter = 'none';
-  imagePreview.style.transform = 'scale(1)';
-  formForPictureLoad.querySelector('.img-upload__effect-level').classList.add('hidden');
+  previewElement.removeAttribute('class');
+  previewElement.style.filter = 'none';
+  previewElement.style.transform = 'scale(1)';
+  areaForSliderElement.classList.add('hidden');
 };
 
 export {resetForm, initImgEffects, initSliderChange};

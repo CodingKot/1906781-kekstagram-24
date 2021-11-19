@@ -1,55 +1,55 @@
 import {isEscapeKey} from './functions.js';
 
-const body = document.querySelector('body');
+const bodyElement = document.querySelector('body');
 
 const onPopUpEscKeyDown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
-    closeMessage();
+    onMessageButtonClick();
   }
 };
 
-function closeMessage () {
-  if (body.contains(document.querySelector('.success'))) {
-    body.removeChild(document.querySelector('.success'));
+function onMessageButtonClick () {
+  if (bodyElement.contains(document.querySelector('.success'))) {
+    bodyElement.removeChild(document.querySelector('.success'));
   } else {
-    body.removeChild(document.querySelector('.error'));
+    bodyElement.removeChild(document.querySelector('.error'));
   }
   document.removeEventListener('keydown', onPopUpEscKeyDown);
-  document.removeEventListener('click', closeByDocumentClick);
+  document.removeEventListener('click', onCloseByDocumentClick);
 }
 
-function closeByDocumentClick (evt) {
+function onCloseByDocumentClick (evt) {
   if (evt.target.className === 'success' || evt.target.className === 'error') {
-    closeMessage();
+    onMessageButtonClick();
   }
 }
 
 const addEventsForAlerts = (name) => {
-  name.addEventListener('click', closeMessage);
+  name.addEventListener('click', onMessageButtonClick);
   document.addEventListener('keydown', onPopUpEscKeyDown);
-  document.addEventListener('click', closeByDocumentClick);
+  document.addEventListener('click', onCloseByDocumentClick);
 };
 
 const showSuccessAlert = () => {
   const templateSuccess = document.querySelector('#success').content.querySelector('.success');
   const successFragment = document.createDocumentFragment();
-  const successMessage = templateSuccess.cloneNode(true);
-  successFragment.appendChild(successMessage);
-  body.appendChild(successFragment);
-  const successButton = successMessage.querySelector('.success__button');
-  addEventsForAlerts(successButton);
+  const successMessageElement = templateSuccess.cloneNode(true);
+  successFragment.appendChild(successMessageElement);
+  bodyElement.appendChild(successFragment);
+  const successButtonElement = successMessageElement.querySelector('.success__button');
+  addEventsForAlerts(successButtonElement);
 };
 
 const showErrorAlert = () => {
   const templateError = document.querySelector('#error').content.querySelector('.error');
   const errorFragment = document.createDocumentFragment();
-  const errorMessage = templateError.cloneNode(true);
-  errorFragment.appendChild(errorMessage);
-  body.appendChild(errorFragment);
-  const errorButton = errorMessage.querySelector('.error__button');
-  errorButton.addEventListener('click', closeMessage);
-  addEventsForAlerts(errorButton);
+  const errorMessageElement = templateError.cloneNode(true);
+  errorFragment.appendChild(errorMessageElement);
+  bodyElement.appendChild(errorFragment);
+  const errorButtonElement = errorMessageElement.querySelector('.error__button');
+  errorButtonElement.addEventListener('click', onMessageButtonClick);
+  addEventsForAlerts(errorButtonElement);
 };
 
 export {showSuccessAlert, showErrorAlert};

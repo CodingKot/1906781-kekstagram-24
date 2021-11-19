@@ -1,82 +1,68 @@
-import { stopEsc } from './load-new-picture-form.js';
+import {onPopUpEscStop} from './load-new-picture-form.js';
 
-const hashtagsContainer = document.querySelector('.text__hashtags');
-const commentsContainer = document.querySelector('.text__description');
-const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-const hashtagAllIsWrongMessage =
-`необходимо исправить в соответствии с установленными требованиями:
+const RE = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const HASHTAGS_INVALIDITY_MESSAGE =
+`Хэш-тэги должны соответствовать следующим требовагиям:
 - хэш-тег начинается с символа # (решётка);
 - строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
 - хеш-тег не может состоять только из одной решётки;
 - максимальная длина одного хэш-тега 20 символов, включая решётку;
 - хэш-теги разделяются пробелами;
-- допускается ввод не более пяти хэштэгов.`;
-const incorrectHashtagsTypeMessage =
-`необходимо исправить в соответствии с установленными требованиями:
-- хэш-тег начинается с символа # (решётка);
-- строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
-- хеш-тег не может состоять только из одной решётки;
-- максимальная длина одного хэш-тега 20 символов, включая решётку;
-- хэш-теги разделяются пробелами;`;
-const incorrectHashtagsNumberMessage = 'Допускается ввод не более пяти хэштэгов.';
-const similarHashtagsMessage =
-'Один и тот же хэш-тег не может быть использован дважды. Хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.';
+- допускается ввод не более пяти хэштэгов.
+- один и тот же хэш-тег не может быть использован дважды. Хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.`;
+
+const MAX_HASHTAGS_QUANTITY = 5;
 const COMMENT_MAX_LENGTH = 140;
-let incorrectHashtags = [];
-let hashtagsString = '';
+
+const hashtagsContainerElement = document.querySelector('.text__hashtags');
+const commentsContainerElement = document.querySelector('.text__description');
+
+let wrongHashtag = '';
+let hashtagsStringArray = [];
 let hashtagsArray = [];
 let similarHashtags = [];
 
-const checkHashtagArea = () => {
-  hashtagsString = hashtagsContainer.value;
-  hashtagsArray = hashtagsString.split(' ');
-  for (let i = 0; i < hashtagsArray.length; i++) {
-    if (!re.test(hashtagsArray[i])) {
-      incorrectHashtags.push(hashtagsArray[i]);
-    }
+const onNewHashtagInput = () => {
+  hashtagsStringArray = hashtagsContainerElement.value.split(' ');
+  hashtagsArray = hashtagsStringArray.filter((item) => item!=='');
+  for (const element of hashtagsArray) {
+    wrongHashtag = !RE.test(element);
   }
+
   hashtagsArray.forEach((item) => {
     similarHashtags.push(item.toLowerCase());
   });
   similarHashtags = similarHashtags.filter((item, i, arr) =>  i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
-  if (hashtagsArray.length > 5 && incorrectHashtags.length > 0) {
-    hashtagsContainer.setCustomValidity(`${incorrectHashtags} ${hashtagAllIsWrongMessage}`);
-    incorrectHashtags = [];
-    similarHashtags = [];
-  } else if (incorrectHashtags.length > 0) {
-    hashtagsContainer.setCustomValidity(`${incorrectHashtags} ${incorrectHashtagsTypeMessage}`);
-    incorrectHashtags = [];
-    similarHashtags = [];
-  } else if (hashtagsArray.length > 5) {
-    hashtagsContainer.setCustomValidity(incorrectHashtagsNumberMessage);
+
+  if (wrongHashtag) {
+    hashtagsContainerElement.setCustomValidity(HASHTAGS_INVALIDITY_MESSAGE);
+    wrongHashtag = '';
   } else if (similarHashtags.length > 0){
-    hashtagsContainer.setCustomValidity(similarHashtagsMessage);
+    hashtagsContainerElement.setCustomValidity(HASHTAGS_INVALIDITY_MESSAGE);
     similarHashtags = [];
+  } else if (hashtagsArray.length > MAX_HASHTAGS_QUANTITY ) {
+    hashtagsContainerElement.setCustomValidity(HASHTAGS_INVALIDITY_MESSAGE);
   } else {
-    hashtagsContainer.setCustomValidity('');
+    hashtagsContainerElement.setCustomValidity('');
   }
-  if (!hashtagsContainer.value) {
-    hashtagsContainer.setCustomValidity('');
-  }
-  hashtagsContainer.reportValidity();
+  hashtagsContainerElement.reportValidity();
 };
 
-const checkCommentsArea = () => {
-  const commentLength = commentsContainer.value.length;
+const onNewCommentInput = () => {
+  const commentLength = commentsContainerElement.value.length;
   if (commentLength > COMMENT_MAX_LENGTH) {
-    commentsContainer.setCustomValidity(`Удалите лишние ${commentLength - COMMENT_MAX_LENGTH} симв.`);
+    commentsContainerElement.setCustomValidity(`Удалите лишние ${commentLength - COMMENT_MAX_LENGTH} симв.`);
   } else {
-    commentsContainer.setCustomValidity('');
+    commentsContainerElement.setCustomValidity('');
   }
-  commentsContainer.reportValidity();
+  commentsContainerElement.reportValidity();
 };
-
 
 const initValidation = () => {
-  commentsContainer.addEventListener('input', checkCommentsArea);
-  hashtagsContainer.addEventListener('blur', checkHashtagArea);
-  hashtagsContainer.addEventListener('keydown', stopEsc);
-  commentsContainer.addEventListener('keydown', stopEsc);
+  commentsContainerElement.addEventListener('input', onNewCommentInput);
+  hashtagsContainerElement.addEventListener('input', onNewHashtagInput);
+  hashtagsContainerElement.addEventListener('keydown', onPopUpEscStop);
+  commentsContainerElement.addEventListener('keydown', onPopUpEscStop);
 };
 
 export {initValidation};

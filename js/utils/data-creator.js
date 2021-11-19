@@ -1,7 +1,7 @@
-import {openBigPicture, closeBigPicture, onPopUpEscKeyDown} from './big-picture.js';
+import {openBigPicture, onPictureCloseElementClick, onPopUpEscKeyDown} from './big-picture.js';
 
 const closeElement = document.querySelector('.big-picture__cancel');
-const container = document.querySelector('.pictures');
+const containerForPicturesElement = document.querySelector('.pictures');
 const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
 
 const renderPicturesList = (picturesData) => {
@@ -20,12 +20,11 @@ const renderPicturesList = (picturesData) => {
     pictureNode.addEventListener('click', ()=> {
       openBigPicture ({url, comments, likes, description});
     });
-    closeElement.addEventListener('click', closeBigPicture);
+    closeElement.addEventListener('click', onPictureCloseElementClick);
     document.addEventListener('keydown', onPopUpEscKeyDown);
   });
-  container.appendChild(picturesListFragment);
+  containerForPicturesElement.appendChild(picturesListFragment);
 
-  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
 export {renderPicturesList};

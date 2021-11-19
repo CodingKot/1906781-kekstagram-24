@@ -1,10 +1,8 @@
 const isEscapeKey = (evt) =>  evt.key === 'Escape';
 
-const getNumberWithoutPercent = function (obj) {
-  return +(obj.value.substring(0, obj.value.length - 1));
-};
+const getNumberWithoutPercent = (obj) => +(obj.value.substring(0, obj.value.length - 1));
 
-const minimizeValue = function (obj1, obj2) {
+const minimizeValue = (obj1, obj2) => {
   let changingValue = getNumberWithoutPercent(obj1);
   if(changingValue > 25) {
     obj1.value = `${changingValue-=25}%`;
@@ -14,7 +12,7 @@ const minimizeValue = function (obj1, obj2) {
   obj2.style.transform = `scale(${changingValue/100})`;
 };
 
-const maximizeValue = function (obj1, obj2) {
+const maximizeValue = (obj1, obj2) => {
   let changingValue = getNumberWithoutPercent(obj1);
   if(changingValue < 100) {
     obj1.value = `${changingValue+=25}%`;
