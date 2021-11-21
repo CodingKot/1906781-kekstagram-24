@@ -25,13 +25,13 @@ let similarHashtags = [];
 const onNewHashtagInput = () => {
   hashtagsStringArray = hashtagsContainerElement.value.split(' ');
   hashtagsArray = hashtagsStringArray.filter((item) => item!=='');
-  for (const element of hashtagsArray) {
-    wrongHashtag = !RE.test(element);
-  }
+
+  wrongHashtag = hashtagsArray.find((hashtagString) => !RE.test(hashtagString));
 
   hashtagsArray.forEach((item) => {
     similarHashtags.push(item.toLowerCase());
   });
+
   similarHashtags = similarHashtags.filter((item, i, arr) =>  i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
 
   if (wrongHashtag) {

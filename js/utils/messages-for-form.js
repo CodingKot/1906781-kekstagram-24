@@ -2,6 +2,7 @@ import {isEscapeKey} from './functions.js';
 
 const bodyElement = document.querySelector('body');
 
+
 const onPopUpEscKeyDown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();

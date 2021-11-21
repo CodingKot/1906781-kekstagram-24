@@ -5,7 +5,7 @@ import {initImgEffects, initSliderChange} from './utils/img-effects.js';
 import {initValidation} from './utils/validation.js';
 import {initLoadForm, setFormSubmit} from './utils/load-new-picture-form.js';
 
-const RERENDER_DELAY = 500;
+const RERENDER_DELAY = 1000;
 document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
 getData((picturesData) => {

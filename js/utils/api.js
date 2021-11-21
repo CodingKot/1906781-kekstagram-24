@@ -1,8 +1,11 @@
 import {showLoadAlert} from './functions.js';
 import {showErrorAlert} from './messages-for-form.js';
 
+const GET_DATA_ADDRESS = 'https://24.javascript.pages.academy/kekstagram/data';
+const SEND_DATA_ADDRESS = 'https://24.javascript.pages.academy/kekstagram';
+
 const getData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/kekstagram/data')
+  fetch(GET_DATA_ADDRESS)
     .then((response) => {
       if (response.ok) {
         response.json()
@@ -20,7 +23,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, formData) => {
   fetch(
-    'https://24.javascript.pages.academy/kekstagram',
+    SEND_DATA_ADDRESS,
     {
       method:'POST',
       body: formData,
