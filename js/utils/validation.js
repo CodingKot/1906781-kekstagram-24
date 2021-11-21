@@ -9,7 +9,7 @@ const HASHTAGS_INVALIDITY_MESSAGE =
 - максимальная длина одного хэш-тега 20 символов, включая решётку;
 - хэш-теги разделяются пробелами;
 - допускается ввод не более пяти хэштэгов.
-- один и тот же хэш-тег не может быть использован дважды: хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.`;
+- один и тот же хэш-тег не может быть использован дважды. Хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.`;
 
 const MAX_HASHTAGS_QUANTITY = 5;
 const COMMENT_MAX_LENGTH = 140;
@@ -18,29 +18,28 @@ const hashtagsContainerElement = document.querySelector('.text__hashtags');
 const commentsContainerElement = document.querySelector('.text__description');
 
 let wrongHashtag = '';
-let hashtagsStringArray = [];
-let hashtagsArray = [];
-let similarHashtags = [];
+let hashtags = [];
+let doubles = [];
 
 const onNewHashtagInput = () => {
-  hashtagsStringArray = hashtagsContainerElement.value.split(' ');
-  hashtagsArray = hashtagsStringArray.filter((item) => item!=='');
 
-  wrongHashtag = hashtagsArray.find((hashtagString) => !RE.test(hashtagString));
+  hashtags = hashtagsContainerElement.value.split(' ').filter((item) => item!=='');
 
-  hashtagsArray.forEach((item) => {
-    similarHashtags.push(item.toLowerCase());
+  wrongHashtag = hashtags.find((hashtagString) => !RE.test(hashtagString));
+
+  hashtags.forEach((item) => {
+    doubles.push(item.toLowerCase());
   });
 
-  similarHashtags = similarHashtags.filter((item, i, arr) =>  i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
+  doubles = doubles.filter((item, i, arr) =>  i !== arr.indexOf(item) || i !== arr.lastIndexOf(item));
 
   if (wrongHashtag) {
     hashtagsContainerElement.setCustomValidity(HASHTAGS_INVALIDITY_MESSAGE);
     wrongHashtag = '';
-  } else if (similarHashtags.length > 0){
+  } else if (doubles.length > 0){
     hashtagsContainerElement.setCustomValidity(HASHTAGS_INVALIDITY_MESSAGE);
-    similarHashtags = [];
-  } else if (hashtagsArray.length > MAX_HASHTAGS_QUANTITY ) {
+    doubles = [];
+  } else if (hashtags.length > MAX_HASHTAGS_QUANTITY ) {
     hashtagsContainerElement.setCustomValidity(HASHTAGS_INVALIDITY_MESSAGE);
   } else {
     hashtagsContainerElement.setCustomValidity('');
